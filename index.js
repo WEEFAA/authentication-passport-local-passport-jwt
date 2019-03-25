@@ -31,7 +31,8 @@ let Users = [
 //DEFAULT VALUES ARE SET 
 const {
 	PORT = 5000,
-	JWT_SECRET = 'somethingfun'
+	JWT_SECRET = 'somethingfun',
+	JWT_ISSUER = 'weefa'
 } = process.env
 
 //passport configurations
@@ -69,9 +70,9 @@ passport.use(new LocalStrategy(localOptions,function(email,password,done){
 
 //@JWT STRATEGY
 const jwtOptions = {
-	secretOrKey:'weefaisgood',
-	jwtFromRequest:ExtractJwt.fromHeader('authorization'),
-	issuer:'weefa'
+	secretOrKey: JWT_SECRET,
+	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+	issuer: JWT_ISSUER
 }
 
 passport.use(new JwtStrategy(jwtOptions,function(payload,done){
@@ -143,6 +144,7 @@ app.get('/login', function(req,res){
 				<input type="password" placeholder="password" name="password" />
 				<input type="submit" />			
 			</form>
+			<a href="/register">Don't have an account?</a>
 		`)
 })
 
@@ -150,10 +152,11 @@ app.get('/register',function(req,res){
 	res.send(`
 			<h4>PLEASE REGISTER</h4>
 			<form action="/register" method="post">
-				<input type="email" placeholder="email" name="email" />
-				<input type="password" placeholder="password" name="password" />
+				<input type="email" placeholder="email" name="email" required/>
+				<input type="password" placeholder="password" name="password" required/>
 				<input type="submit" />			
 			</form>
+			<a href="/register">Already have an account?</a>
 		`)
 })
 
@@ -175,7 +178,7 @@ app.post('/login',passport.authenticate('local',{session:false,failureRedirect:'
 	//and then send it to the user
 	const { email } = req.user 
 	const payload = {
-		iss:"weefa",
+		iss:JWT_ISSUER,
 		sub:email
 	}
 	//sign the token with the payload
