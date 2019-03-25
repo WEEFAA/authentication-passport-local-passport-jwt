@@ -38,7 +38,7 @@ Since it's using jsonwebtoken/jwt, it is intended not used
 session because we're using jwt here.
 
 
-##Suggestions
+## Suggestions
 
 Don't hesitate to submit pull request to 
 make this repo updated and make it better :))
