@@ -32,11 +32,6 @@ Use postman to test if you can access the /protect endpoint
 with the jwt token you received, if you don't use postman 
 try the chrome web extension Restlet Client.
 
-# Stateless - No session
-
-Since it's using jsonwebtoken/jwt, it is intended not used 
-session because we're using jwt here.
-
 
 ## Suggestions
 
