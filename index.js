@@ -19,8 +19,9 @@ const v1Endpoints = require('./routes/v1')
 app.get('/',function(req,res){
 	res.send(`
 		<h1>WELCOME TO YOUR OWN API</h1>
-		<a href="/login">LOGIN</a>
-		<a href="/register">REGISTER</a>
+		<a href="/login">LOGIN</a> | 
+		<a href="/register">REGISTER</a> <br />
+		<a href="/protected" > Protected Resource </a>
 	`)
 })
 
