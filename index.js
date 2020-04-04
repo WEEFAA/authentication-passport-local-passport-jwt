@@ -7,85 +7,16 @@ const ExtractJwt = require('passport-jwt').ExtractJwt
 const LocalStrategy = require('passport-local').Strategy
 const app = express()
 
-
 // application-level middlewares 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
 // get Users 
 const { Users } = require('./data')
-
-//process configurations
-//DEFAULT VALUES ARE SET 
-const {
-	PORT = 5000,
-	JWT_SECRET = 'somethingfun',
-	JWT_ISSUER = 'weefa'
-} = process.env
-
-//passport configurations
-
-//@LOCAL STRATEGY OPTIONS
-const localOptions = {
-	usernameField: 'email',
-	passwordField:'password',
-}
-
-//@JWT STRATEGY OPTIONS
-const jwtOptions = {
-	secretOrKey: JWT_SECRET,
-	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-	issuer: JWT_ISSUER
-}
-
-passport.use(new LocalStrategy(localOptions,function(email,password,done){
-	try{	
-		const user = Users.find(user => user.email === email)
-		if(!user){
-			return done(null,false)
-		}
-
-		//if the user is registered,
-		//check for the password
-		const isMatch = user.password === password
-
-		//if not match, handle it
-		if(!isMatch){
-			return done(null,false)
-		}
-
-		//if all verifications passed,
-		//pass the user
-		done(null,user)
-
-	}catch(error){
-		done(error)
-	}
-}))
-
-
-
-passport.use(new JwtStrategy(jwtOptions,function(payload,done){
-	try{
-		const user = Users.find(user => (
-			user.email === payload.sub
-		))
-
-		//if the user is not found, reject the request
-		if(!user){
-			return done(null,false)
-		}
-
-		//if the user is registered
-		//and the jwt token is valid
-		//supply the user
-		done(null,user)
-
-	}catch(error){
-		done(error)
-	}
-}))
-
+//configurations
+const { PORT, JWT_ISSUER, JWT_SECRET } = require('./config')
+//initialize passport strategies
+require('./passport')
 
 // @/register MIDDLEWARE
 function registry(req,res,next){
