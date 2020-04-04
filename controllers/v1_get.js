@@ -31,5 +31,10 @@ exports.getRegister = function(req,res){
 // @GET /protected
 // fetch protected resource, PS: user must be authenticated before accessing this endpoint
 exports.getResource = function(req,res){
-	res.json({ protected_resource:"Weefa is my pal" })
+	res.json({ 
+		msg: "This is just a demonstration on how jwt is used.",
+		note_1: "However, you musn't send the token on request query string like this. Look at your URL bar.",
+		note_2: "Token must be sent on Authorization header",
+		token:`${req.query.token || ""}` 	
+	})
 }
