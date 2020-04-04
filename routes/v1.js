@@ -4,7 +4,7 @@ const passport = require('passport')
 
 // controllers
 const { getLogin, getRegister, getResource } = require('./../controllers/v1_get')
-const { processUser, register, registerRedirect } = require('./../controllers/v1_post')
+const { processUser, register } = require('./../controllers/v1_post')
 
 // @GET /login 
 // show login form 
@@ -24,7 +24,7 @@ router.post('/login',passport.authenticate('local', {  session: false, failureRe
 
 // @POST /register
 // register a new user
-router.post('/register', register, registerRedirect)
+router.post('/register', register)
 
 module.exports = router
 

@@ -19,37 +19,16 @@ exports.processUser = function(req,res){
 // @POST /register
 // register a new user
 exports.register = function registry(req,res,next){
-	try{
-		const { email, password} = req.body 
+	const { email, password} = req.body 
 
-		const isRegistered = Users.find(user => user.email === email)
-		if(isRegistered){
-			//redirect the user to the /register route
-			//no error message yet but @assume that the user should
-			//see a display message or flash message that the email is already in used
-			return res.redirect('/register')
-		}
+	const user = Users.find(user => user.email === email)
+	// if this email is already taken, reject register
+	if(user) return res.redirect('/register')
 
-		//construct a new user 
-		const user = {
-			email,
-			password
-		}
-
-		//push the new user to the database @simulating it
-		Users.push(user)
-
-		//call the next middleware
-		next()
-
-	}catch(error){
-		throw new Error(error)
-	}
-}
-
-// @POST /register
-// register a new user
-exports.registerRedirect = function(req,res){
-	//redirect user to login page after successful registration
-	res.redirect('/login')
+	//create a new user 
+	const user = { email, password }
+	Users.push(user)
+	
+	//redirect to homepage
+	return res.redirect('/')
 }
