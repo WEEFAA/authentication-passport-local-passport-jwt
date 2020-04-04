@@ -25,7 +25,7 @@ const jwtOptions = {
 
 //setup passport strategies
 passport.use(new LocalStrategy(localOptions,localStrategyVerifyCallback)) //local
-passport.use(new JwtStrategy(jwtOptions, jwtStrategyVerifyCallback))
+passport.use(new JwtStrategy(jwtOptions, jwtStrategyVerifyCallback)) // jwt
 
 
 //local strategy function
@@ -42,6 +42,7 @@ function localStrategyVerifyCallback(username, password, done){
 	}catch(e){
 		console.warn('Something went wrong on verifying local authentication')
 		console.error(e.stack)
+		done("Server Error") // throw a 500 error status code by default with this message
 	}
 }
 
@@ -57,5 +58,6 @@ function jwtStrategyVerifyCallback(jwt_payload, done){
 	}catch(e){
 		console.warn('Something went wrong on verifying jwt authentication')
 		console.error(e.stack)
+		done("Server Error") // throw a 500 error status code by default with this message
 	}
 }
