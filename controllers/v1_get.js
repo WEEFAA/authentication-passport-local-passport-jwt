@@ -6,9 +6,10 @@ exports.getLogin = function(req,res){
 		<form action="/login" method="post">
 			<input type="email" placeholder="email" name="email" />
 			<input type="password" placeholder="password" name="password" />
-			<input type="submit" />			
+			<input type="submit" value="Login"/>			
 		</form>
-		<a href="/register">Don't have an account?</a>
+		<a href="/register">Don't have an account?</a> <br />
+		<a href="/">Home</a>
 	`)
 }
 
@@ -20,9 +21,10 @@ exports.getRegister = function(req,res){
 		<form action="/register" method="post">
 			<input type="email" placeholder="email" name="email" required/>
 			<input type="password" placeholder="password" name="password" required/>
-			<input type="submit" />			
+			<input type="submit" value="Register"/>			
 		</form>
-		<a href="/register">Already have an account?</a>
+		<a href="/login">Already have an account?</a> <br />
+		<a href="/">Home</a>
 	`)
 }
 
