@@ -3,15 +3,15 @@
 // simulating the functionality as if this is database
 exports.Users = [
 	{
-		email: "rayranilfu7o7@gmail.com",
+		username: "@weefa",
 		password:"admin"
 	},
 	{
-		email:"admin@gmail.com",
+		username:"admin",
 		password:"admin"
 	},
 	{
-		email:"rayranilweefa@gmail.com",
-		password:"something"
+		username:"guest",
+		password:"12345"
 	}
 ]

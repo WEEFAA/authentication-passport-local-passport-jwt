@@ -12,7 +12,7 @@ const { JWT_SECRET, JWT_ISSUER } = require('./../config')
 
 //@LOCAL STRATEGY OPTIONS
 const localOptions = {
-	usernameField: 'email',
+	usernameField: 'username',
 	passwordField:'password'
 }
 
@@ -32,7 +32,7 @@ passport.use(new JwtStrategy(jwtOptions, jwtStrategyVerifyCallback)) // jwt
 function localStrategyVerifyCallback(username, password, done){
 	try{
 		//fetch requested user
-		const user = Users.find(user => user.email === username)
+		const user = Users.find(user => user.username === username)
 		//if user's not found, reject
 		if(!user) return done(null, false)
 		// if there's a user but password credential is wrong, reject
@@ -50,7 +50,7 @@ function localStrategyVerifyCallback(username, password, done){
 function jwtStrategyVerifyCallback(jwt_payload, done){
 	try{
 		// fetch requested user with 'sub' payload
-		const user = Users.find(user => user.email === jwt_payload.sub)
+		const user = Users.find(user => user.username === jwt_payload.sub)
 		// if user's not found
 		if(!user) return done(null, false)
 		// otherwise 

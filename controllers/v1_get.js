@@ -4,7 +4,7 @@ exports.getLogin = function(req,res){
 	res.send(`
 		<h4>PLEASE LOGIN</h4>
 		<form action="/login" method="post">
-			<input type="email" placeholder="email" name="email" />
+			<input type="text" placeholder="username" name="username" />
 			<input type="password" placeholder="password" name="password" />
 			<input type="submit" value="Login"/>			
 		</form>
@@ -19,7 +19,7 @@ exports.getRegister = function(req,res){
 	res.send(`
 		<h4>PLEASE REGISTER</h4>
 		<form action="/register" method="post">
-			<input type="email" placeholder="email" name="email" required/>
+			<input type="text" placeholder="username" name="username" required/>
 			<input type="password" placeholder="password" name="password" required/>
 			<input type="submit" value="Register"/>			
 		</form>
