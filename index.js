@@ -7,25 +7,13 @@ const ExtractJwt = require('passport-jwt').ExtractJwt
 const LocalStrategy = require('passport-local').Strategy
 const app = express()
 
+
+// application-level middlewares 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 
-// @DUMMY USERS
-// simulating the functionality as if this is database
-let Users = [
-	{
-		email: "rayranilfu7o7@gmail.com",
-		password:"admin"
-	},
-	{
-		email:"admin@gmail.com",
-		password:"admin"
-	},
-	{
-		email:"rayranilweefa@gmail.com",
-		password:"something"
-	}
-]
+// get Users 
+const { Users } = require('./data')
 
 //process configurations
 //DEFAULT VALUES ARE SET 
@@ -37,10 +25,17 @@ const {
 
 //passport configurations
 
-//@LOCAL STRATEGY
+//@LOCAL STRATEGY OPTIONS
 const localOptions = {
 	usernameField: 'email',
 	passwordField:'password',
+}
+
+//@JWT STRATEGY OPTIONS
+const jwtOptions = {
+	secretOrKey: JWT_SECRET,
+	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+	issuer: JWT_ISSUER
 }
 
 passport.use(new LocalStrategy(localOptions,function(email,password,done){
@@ -68,12 +63,7 @@ passport.use(new LocalStrategy(localOptions,function(email,password,done){
 	}
 }))
 
-//@JWT STRATEGY
-const jwtOptions = {
-	secretOrKey: JWT_SECRET,
-	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-	issuer: JWT_ISSUER
-}
+
 
 passport.use(new JwtStrategy(jwtOptions,function(payload,done){
 	try{
