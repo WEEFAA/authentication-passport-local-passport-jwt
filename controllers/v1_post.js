@@ -11,8 +11,10 @@ exports.processUser = function(req,res){
 	const payload = { iss:JWT_ISSUER, sub:email }
 	//sign the token with the payload
 	JWT.sign(payload,JWT_SECRET,function(err,token){
-		//send that token in the response as json
-		res.json({token})
+		// to demonstrate how you can use this token
+		// to access some resource, you will be redirected to /protected endpoint
+		// which is restricted to authenticated users
+		res.redirect(`/protected?token=${token}`)
 	})
 }
 
