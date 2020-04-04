@@ -19,7 +19,7 @@ const localOptions = {
 //@JWT STRATEGY OPTIONS
 const jwtOptions = {
 	secretOrKey: JWT_SECRET,
-	jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+	jwtFromRequest: req => req.query.token || null ,
 	issuer: JWT_ISSUER
 }
 
